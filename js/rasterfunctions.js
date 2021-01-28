@@ -18,7 +18,7 @@ require([
   });
 
   //Shared publicly from AGOL
-  const urlGeomapDTM = 'https://utility.arcgis.com/usrsvcs/servers/7f3c945cd9cd4c3eba86b5d1fc3708f9/rest/services/Geomap_UTM33_EUREF89/GeomapDTM/ImageServer';
+  const urlGeomapDTM = 'https://utility.arcgis.com/usrsvcs/servers/781a5b76174e40d9a1e7f6f7400611fb/rest/services/Geomap_UTM33_EUREF89/GeomapDTM/ImageServer';
   const urlGeocacheGray = 'https://services.geodataonline.no/arcgis/rest/services/Geocache_UTM33_EUREF89/GeocacheGraatone/MapServer';
 
   var tileLayer = new TileLayer({
