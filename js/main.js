@@ -67,7 +67,7 @@ const view = new MapView({
   }
 })
 
-const actionBar = new ActionBar(view)
+const actionBar = new ActionBar(view, 'functions')
 const changeRasterFunction = new ChangeRasterFunction(layer)
 const imageLayerSettings = new LayerSettings(layer)
 

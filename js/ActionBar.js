@@ -5,7 +5,7 @@ import Bookmarks from 'https://js.arcgis.com/4.22/@arcgis/core/widgets/Bookmarks
 import Print from 'https://js.arcgis.com/4.22/@arcgis/core/widgets/Print.js'
 import Fullscreen from "https://js.arcgis.com/4.22/@arcgis/core/widgets/Fullscreen.js"
 
-let activeWidget;
+let activeWidget
 
 const handleActionBarClick = ({ target }) => {
   if (target.tagName !== "CALCITE-ACTION") {
@@ -26,7 +26,8 @@ const handleActionBarClick = ({ target }) => {
 }
 
 export default class ActionBar {
-  constructor(view) {
+  constructor(view, defaultActiveWidgetId = null) {
+    activeWidget = defaultActiveWidgetId
     this.view = view
     init(view);
   }
