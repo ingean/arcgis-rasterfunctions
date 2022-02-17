@@ -2,62 +2,100 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="initial-scale=1,maximum-scale=1,user-scalable=no"
-    />
-    <title>Rasterfunksjoner i ArcGIS</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>Geodata AS - Rasterfunksjoner</title>
+    <link rel="icon" type="image/png" href="./images/geodata-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="./images/geodata-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="./images/geodata-96x96.png" sizes="96x96">
 
-    <link
-      rel="stylesheet"
-      href="https://js.arcgis.com/4.12/esri/themes/light/main.css"
-    />
-    <link 
-      rel="stylesheet" 
-      type="text/css" 
-      href="css/rasterfunctions.css"
-    >
-    <script src="https://js.arcgis.com/4.12/"></script>
-    <script src="js/rasterfunctions.js"></script>
+    <script src="https://js.arcgis.com/calcite-components/1.0.0-beta.76/calcite.esm.js" type="module"></script>
+    <link rel="stylesheet" href="https://js.arcgis.com/calcite-components/1.0.0-beta.76/calcite.css" />
+    
+    <!--link rel="stylesheet" href="https://js.arcgis.com/4.22/@arcgis/core/assets/esri/themes/light/main.css" /-->
+    <link rel="stylesheet" href="https://js.arcgis.com/4.22/@arcgis/core/assets/esri/themes/dark/main.css" />
+  
+    <link rel="stylesheet" href="./css/main.css" />
   </head>
-
   <body>
-    <div id="div-view"></div>
-    <div id="div-rasterfunctions-selector" class="esri-widget">
-      <b>Velg rasterfunksjon</b><br/>
-      <br />Funksjoner:
-      <div class="rasterfunctions-options">
-        <button
-          class="esri-widget--button rasterfunction-button"
-          id="button-rasterfunction-hillshade"
-          value="Grayscale_Hillshade"
-          title="Fjellskygge"
-        ><img class="img-btn" src="images/mountain.png" /></button>
-        <button
-          class="esri-widget--button rasterfunction-button"
-          id="button-rasterfunction-slope"
-          value="Slope_Degrees_Map"
-          title="Helningsvinkel"
-        ><img class="img-btn" src="images/slope.png" /></button>
-        <button
-          class="esri-widget--button rasterfunction-button"
-          id="button-rasterfunction-height"
-          value="Dynamic_Height"
-          title="Høyde over havet"
-        ><img class="img-btn" src="images/contour.png" /></button>
-        <button
-          class="esri-widget--button rasterfunction-button"
-          id="button-rasterfunction-steep"
-          value="Steep_Terrain_Color"
-          title="Skredterreng"
-        ><img class="img-btn" src="images/avalance.png" /></button>
-      </div>
-      <br />
-      <div class="tooltip">
-        <label for="slider-transparency">Gjennomsiktighet:</label>
-        <div id="slider-transparency"></div>
-      </div>
-      <br />
+    <div class="calcite-theme-dark">
+
+      <calcite-shell content-behind>
+
+        <h2 id="header-title" slot="header">
+          <!--dynamically populated-->
+        </h2>
+  
+        <calcite-loader active></calcite-loader>
+
+        <calcite-shell-panel slot="primary-panel" detached>
+  
+          <calcite-action-bar slot="action-bar">
+            <calcite-action data-action-id="layers" icon="layers" text="Kartlag"></calcite-action>
+            <calcite-action data-action-id="basemaps" icon="basemap" text="Bakgrunnskart"></calcite-action>
+            <calcite-action data-action-id="legend" icon="legend" text="Tegnforklaring"></calcite-action>
+            <calcite-action data-action-id="bookmarks" icon="bookmark" text="Bokmerker"></calcite-action>
+            <calcite-action data-action-id="print" icon="print" text="Utskrift"></calcite-action>
+            <calcite-action data-action-id="functions" icon="processing-templates" text="Funksjoner"></calcite-action>
+            <calcite-action data-action-id="settings" icon="sliders" text="Innstillinger"></calcite-action>
+          </calcite-action-bar>
+  
+          <!-- map-specific panels (each one provides a div for JS API widgets) -->
+          <calcite-panel heading="Kartlag" height-scale="l" width-scale="m" data-panel-id="layers" hidden>
+            <div id="layers-container"></div>
+          </calcite-panel>
+          <calcite-panel heading="Bakgrunnkart" height-scale="l" width-scale="m" data-panel-id="basemaps" hidden>
+            <div id="basemaps-container"></div>
+          </calcite-panel>
+          <calcite-panel heading="Tegnforklaring" height-scale="l" width-scale="m" data-panel-id="legend" hidden>
+            <div id="legend-container"></div>
+          </calcite-panel>
+          <calcite-panel heading="Bokmerker" height-scale="l" width-scale="m" data-panel-id="bookmarks" hidden>
+            <div id="bookmarks-container"></div>
+          </calcite-panel>
+          <calcite-panel heading="Utskrift" height-scale="l" width-scale="m" data-panel-id="print" hidden>
+            <div id="print-container"></div>
+          </calcite-panel>
+
+          <!-- Custom panels -->
+          <calcite-panel heading="Funksjoner" data-panel-id="functions" active>
+            <calcite-pick-list id="function-list">
+              <calcite-pick-list-item label="Fjellskygge" description="Fremhever landskapets topografi" value="0" selected>
+                  <calcite-action slot="actions-end" icon="function"></calcite-action>
+              </calcite-pick-list-item>
+              <calcite-pick-list-item label="Høyde" description="Fremhever høydeforskjeller" value="1">
+                <calcite-action slot="actions-end" icon="function"></calcite-action>
+              </calcite-pick-list-item>
+              <calcite-pick-list-item label="Helning" description="Fremhever terrengets bratthet" value="2">
+                  <calcite-action slot="actions-end" icon="function"></calcite-action>
+              </calcite-pick-list-item>
+              <calcite-pick-list-item label="Skredterreng" description="Fremhever terreng mellom 30 og 60 grader bratt" value="3">
+                  <calcite-action slot="actions-end" icon="function"></calcite-action>
+              </calcite-pick-list-item>
+            </calcite-pick-list>
+          </calcite-panel>
+
+          <calcite-panel heading="Innstillinger" data-panel-id="settings" hidden>
+            <calcite-label>Gjennomsiktighet
+              <calcite-slider
+                id="layer-opacity"
+                min="0"
+                max="100"
+                steps = "10"
+                value="30"
+                label-handles>
+              </calcite-slider>
+            </calcite-label>
+          </calcite-panel>
+
+        </calcite-shell-panel>
+  
+        <div id="viewDiv">
+        </div>
+        
+      </calcite-shell>
+  
     </div>
   </body>
+  <script type="module" src="js/main.js"> 
+  </script>
 </html>
