@@ -5,14 +5,12 @@ import Basemap from 'https://js.arcgis.com/4.22/@arcgis/core/Basemap.js'
 import TileLayer from 'https://js.arcgis.com/4.22/@arcgis/core/layers/TileLayer.js'
 import ImageryLayer from 'https://js.arcgis.com/4.22/@arcgis/core/layers/ImageryLayer.js'
 import RasterFunction from 'https://js.arcgis.com/4.22/@arcgis/core/layers/support/RasterFunction.js'
-import Slider from 'https://js.arcgis.com/4.22/@arcgis/core/widgets/Slider.js'
 import esriConfig from 'https://js.arcgis.com/4.22/@arcgis/core/config.js'
 import ActionBar from './ActionBar.js'
-import ChangeRasterFunction from './ChangeRasterFunction.js'
+import RasterFunctionTemplates from './RasterFunctionTemplates.js'
 import LayerSettings from './LayerSettings.js'
 
 esriConfig.apiKey = 'AAPKf28ba4fdd1e945a1be5f8d43dbd650eaMjyiDjdFXaCPZzo5erYJ7Xc7XKvBlbJZIPvNu0O2zwfeFiGhqoBvtQwJUZ1DMXIL'
-
 
 //Shared publicly from AGOL
 const urlGeomapDTM = 'https://utility.arcgis.com/usrsvcs/servers/781a5b76174e40d9a1e7f6f7400611fb/rest/services/Geomap_UTM33_EUREF89/GeomapDTM/ImageServer';
@@ -68,7 +66,7 @@ const view = new MapView({
 })
 
 const actionBar = new ActionBar(view, 'functions')
-const changeRasterFunction = new ChangeRasterFunction(layer)
+const changeRasterFunction = new RasterFunctionTemplates(layer)
 const imageLayerSettings = new LayerSettings(layer)
 
 document.querySelector("#header-title").textContent = 'Demo av rasterfunksjoner i ArcGIS'
