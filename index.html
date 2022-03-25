@@ -30,13 +30,15 @@
         <calcite-shell-panel slot="primary-panel" detached>
   
           <calcite-action-bar slot="action-bar" intl-collapse="Minimere" intl-expand="Maksimere">
+            <calcite-action-group>
+              <calcite-action data-action-id="functions" icon="processing-templates" text="Funksjoner"></calcite-action>
+              <calcite-action data-action-id="settings" icon="sliders" text="Innstillinger"></calcite-action>
+            </calcite-action-group>
             <calcite-action data-action-id="layers" icon="layers" text="Kartlag"></calcite-action>
             <calcite-action data-action-id="basemaps" icon="basemap" text="Bakgrunnskart"></calcite-action>
             <calcite-action data-action-id="legend" icon="legend" text="Tegnforklaring"></calcite-action>
             <calcite-action data-action-id="bookmarks" icon="bookmark" text="Bokmerker"></calcite-action>
             <calcite-action data-action-id="print" icon="print" text="Utskrift"></calcite-action>
-            <calcite-action data-action-id="functions" icon="processing-templates" text="Funksjoner"></calcite-action>
-            <calcite-action data-action-id="settings" icon="sliders" text="Innstillinger"></calcite-action>
           </calcite-action-bar>
   
           <!-- map-specific panels (each one provides a div for JS API widgets) -->
@@ -75,16 +77,60 @@
           </calcite-panel>
 
           <calcite-panel heading="Innstillinger" data-panel-id="settings" hidden>
-            <calcite-label>Gjennomsiktighet
-              <calcite-slider
-                id="layer-opacity"
-                min="0"
-                max="100"
-                steps = "10"
-                value="30"
-                label-handles>
-              </calcite-slider>
-            </calcite-label>
+            <calcite-block heading="Tegneregler" open>
+              <calcite-icon scale="s" slot="icon" icon="brightness"></calcite-icon>
+              <calcite-label>Gjennomsiktighet
+                <calcite-slider
+                  id="layer-opacity"
+                  min="0"
+                  max="100"
+                  steps = "10"
+                  value="30"
+                  label-handles>
+                </calcite-slider>
+              </calcite-label>
+              <calcite-block-section text="Lagblanding">
+                <calcite-pick-list id="blendmode-picklist" aria-busy="false" aria-disabled="false" role="menu" filter-enabled="true" filter-placeholder="Filterresultater">
+                  <calcite-pick-list-item label="Normal" value="normal" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-group group-title="Gjør lysere"></calcite-pick-list-group>
+                  <calcite-pick-list-item label="Lysere" value="lighter" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-item label="Gjør lysere" value="lighten" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-item label="Skjerm" value="screen" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-item label="Lysne farge" value="color-dodge" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-item label="Pluss" value="plus" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-group group-title="Gjør mørkere" calcite-hydrated=""></calcite-pick-list-group>
+                  <calcite-pick-list-item label="Gjør mørkere" value="darken" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-item label="Mørkne farger" value="color-burn" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-item label="Multipliser" value="multiply" tabindex="-1" icon="circle" selected></calcite-pick-list-item>
+                  <calcite-pick-list-group group-title="Kontrast"></calcite-pick-list-group>
+                  <calcite-pick-list-item label="Overlegg" value="overlay" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-item label="Hardt lys" value="hard-light" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-item label="Mykt lys" value="soft-light" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-item label="Sterkt lys" value="vivid-light" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-group group-title="Komponent"></calcite-pick-list-group>
+                  <calcite-pick-list-item label="Farge" value="color" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-item label="Fargetone" value="hue" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-item label="Metning" value="saturation" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-item label="Lysstyrke" value="luminosity" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-group group-title="Sammensetting"></calcite-pick-list-group>
+                  <calcite-pick-list-item label="Mål over" value="destination-over" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-item label="Mål på toppen" value="destination-atop" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-item label="Mål i" value="destination-in" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-item label="Mål ut" value="destination-out" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-item label="Kilde på toppen" value="source-atop" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-item label="Kilde inn" value="source-in" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-item label="Kilde ut" value="source-out" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-item label="XOR" value="xor" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-group group-title="Inverter"></calcite-pick-list-group>
+                  <calcite-pick-list-item label="Inverter" value="invert" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-item label="Reflekter" value="reflect" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-item label="Gjennomsnitt" value="average" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-item label="Differanse" value="difference" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-item label="Utelatelse" value="exclusion" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                  <calcite-pick-list-item label="Minus" value="minus" tabindex="-1" icon="circle"></calcite-pick-list-item>
+                </calcite-pick-list>
+              </calcite-block-section>
+            </calcite-block>
           </calcite-panel>
 
         </calcite-shell-panel>

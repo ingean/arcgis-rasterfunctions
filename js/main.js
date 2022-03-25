@@ -1,8 +1,8 @@
 import Map from 'https://js.arcgis.com/4.22/@arcgis/core/Map.js'
 import MapView from 'https://js.arcgis.com/4.22/@arcgis/core/views/MapView.js'
-import Extent from 'https://js.arcgis.com/4.22/@arcgis/core/geometry/Extent.js'
 import Basemap from 'https://js.arcgis.com/4.22/@arcgis/core/Basemap.js'
-import TileLayer from 'https://js.arcgis.com/4.22/@arcgis/core/layers/TileLayer.js'
+import VectorTileLayer from 'https://js.arcgis.com/4.22/@arcgis/core/layers/VectorTileLayer.js'
+import Extent from 'https://js.arcgis.com/4.22/@arcgis/core/geometry/Extent.js'
 import ImageryLayer from 'https://js.arcgis.com/4.22/@arcgis/core/layers/ImageryLayer.js'
 import RasterFunction from 'https://js.arcgis.com/4.22/@arcgis/core/layers/support/RasterFunction.js'
 import esriConfig from 'https://js.arcgis.com/4.22/@arcgis/core/config.js'
@@ -10,21 +10,20 @@ import ActionBar from './ActionBar.js'
 import RasterFunctionTemplates from './RasterFunctionTemplates.js'
 import LayerSettings from './LayerSettings.js'
 
-esriConfig.apiKey = 'AAPKf28ba4fdd1e945a1be5f8d43dbd650eaMjyiDjdFXaCPZzo5erYJ7Xc7XKvBlbJZIPvNu0O2zwfeFiGhqoBvtQwJUZ1DMXIL'
+//esriConfig.apiKey = 'AAPKa9498736c8d64cfdb88cd0abbde4efcb-bZOw_j3NJA_zxvWbyNiCSB0NSwvP58ngMuXuhLHDU5YX_W9LrGy3fRhR01lMXbg' // DevInge account
 
 //Shared publicly from AGOL
 const urlGeomapDTM = 'https://utility.arcgis.com/usrsvcs/servers/781a5b76174e40d9a1e7f6f7400611fb/rest/services/Geomap_UTM33_EUREF89/GeomapDTM/ImageServer';
-const urlGeocacheGray = 'https://services.geodataonline.no/arcgis/rest/services/Geocache_UTM33_EUREF89/GeocacheGraatone/MapServer';
+//const urlGeomapDTM = 'https://utility.arcgis.com/usrsvcs/servers/09c9d7894d014485b92ad494eeec991b/rest/services/Geomap_UTM33_EUREF89/GeomapDTM/ImageServer' // DevInge account
 
-const tileLayer = new TileLayer({
-  url: urlGeocacheGray
-});
-
-const basemap = new Basemap({
-  baseLayers: [tileLayer],
-  title: "Geodata Bakgrunnskart",
-  id: "GeocacheLandskap"
-});
+const lightMap = new Basemap({
+  baseLayers: [
+    new VectorTileLayer({
+      url: 'https://services.geodataonline.no/arcgis/rest/services/GeocacheVector/GeocacheGraatone/VectorTileServer/resources/styles/root.json'
+    })
+  ],
+  title: 'Bakgrunnskart (Lys)'
+})
 
 const imagePopupTemplate = {
   title: "Terrengmodell over Norge",
@@ -40,13 +39,14 @@ const layer = new ImageryLayer({
     variableName: "Raster"
   }),
   popupTemplate: imagePopupTemplate,
-  opacity: 0.7,
-});
+  opacity: 0.5,
+  blendMode: 'multiply'
+})
     
 const map = new Map({ 
-  basemap: basemap,
-  layers:[layer] 
-});
+  basemap: lightMap,
+  layers: [layer]
+})
 
 const view = new MapView({
   map: map,
@@ -72,5 +72,13 @@ const imageLayerSettings = new LayerSettings(layer)
 document.querySelector("#header-title").textContent = 'Demo av rasterfunksjoner i ArcGIS'
 document.querySelector("calcite-shell").hidden = false
 document.querySelector("calcite-loader").active = false
+
+document
+.querySelector('#blendmode-picklist')
+.addEventListener('calciteListChange', async event => {
+  let selectedItems = await event.target.getSelectedItems()
+  selectedItems = [...selectedItems]
+  layer.blendMode = selectedItems[0][0]
+})
 
 
