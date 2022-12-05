@@ -1,9 +1,9 @@
-import BasemapGallery from 'https://js.arcgis.com/4.22/@arcgis/core/widgets/BasemapGallery.js'
-import LayerList from 'https://js.arcgis.com/4.22/@arcgis/core/widgets/LayerList.js'
-import Legend from 'https://js.arcgis.com/4.22/@arcgis/core/widgets/Legend.js'
-import Bookmarks from 'https://js.arcgis.com/4.22/@arcgis/core/widgets/Bookmarks.js'
-import Print from 'https://js.arcgis.com/4.22/@arcgis/core/widgets/Print.js'
-import Fullscreen from "https://js.arcgis.com/4.22/@arcgis/core/widgets/Fullscreen.js"
+import BasemapGallery from 'https://js.arcgis.com/4.25/@arcgis/core/widgets/BasemapGallery.js'
+import LayerList from 'https://js.arcgis.com/4.25/@arcgis/core/widgets/LayerList.js'
+import Legend from 'https://js.arcgis.com/4.25/@arcgis/core/widgets/Legend.js'
+import Bookmarks from 'https://js.arcgis.com/4.25/@arcgis/core/widgets/Bookmarks.js'
+import Print from 'https://js.arcgis.com/4.25/@arcgis/core/widgets/Print.js'
+import Fullscreen from "https://js.arcgis.com/4.25/@arcgis/core/widgets/Fullscreen.js"
 
 let activeWidget
 

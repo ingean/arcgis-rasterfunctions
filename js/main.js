@@ -1,11 +1,12 @@
-import Map from 'https://js.arcgis.com/4.22/@arcgis/core/Map.js'
-import MapView from 'https://js.arcgis.com/4.22/@arcgis/core/views/MapView.js'
-import Basemap from 'https://js.arcgis.com/4.22/@arcgis/core/Basemap.js'
-import VectorTileLayer from 'https://js.arcgis.com/4.22/@arcgis/core/layers/VectorTileLayer.js'
-import Extent from 'https://js.arcgis.com/4.22/@arcgis/core/geometry/Extent.js'
-import ImageryLayer from 'https://js.arcgis.com/4.22/@arcgis/core/layers/ImageryLayer.js'
-import RasterFunction from 'https://js.arcgis.com/4.22/@arcgis/core/layers/support/RasterFunction.js'
-import esriConfig from 'https://js.arcgis.com/4.22/@arcgis/core/config.js'
+import Map from 'https://js.arcgis.com/4.25/@arcgis/core/Map.js'
+import MapView from 'https://js.arcgis.com/4.25/@arcgis/core/views/MapView.js'
+import Basemap from 'https://js.arcgis.com/4.25/@arcgis/core/Basemap.js'
+import VectorTileLayer from 'https://js.arcgis.com/4.25/@arcgis/core/layers/VectorTileLayer.js'
+import Extent from 'https://js.arcgis.com/4.25/@arcgis/core/geometry/Extent.js'
+import ImageryLayer from 'https://js.arcgis.com/4.25/@arcgis/core/layers/ImageryLayer.js'
+import RasterFunction from 'https://js.arcgis.com/4.25/@arcgis/core/layers/support/RasterFunction.js'
+import * as reactiveUtils from 'https://js.arcgis.com/4.25/@arcgis/core/core/reactiveUtils.js'
+import esriConfig from 'https://js.arcgis.com/4.25/@arcgis/core/config.js'
 import ActionBar from './ActionBar.js'
 import RasterFunctionTemplates from './RasterFunctionTemplates.js'
 import LayerSettings from './LayerSettings.js'
@@ -80,5 +81,13 @@ document
   selectedItems = [...selectedItems]
   layer.blendMode = selectedItems[0][0]
 })
+
+view.whenLayerView(layer).then(layerView => {
+  reactiveUtils.when(() => !layerView.updating, (newVal) => {
+    let progressBar = document.getElementById('function-progress')
+    progressBar.style.display = 'none'
+  })
+})
+
 
 

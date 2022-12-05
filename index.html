@@ -8,11 +8,11 @@
     <link rel="icon" type="image/png" href="./images/geodata-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="./images/geodata-96x96.png" sizes="96x96">
 
-    <script src="https://js.arcgis.com/calcite-components/1.0.0-beta.76/calcite.esm.js" type="module"></script>
-    <link rel="stylesheet" href="https://js.arcgis.com/calcite-components/1.0.0-beta.76/calcite.css" />
+    <script src="https://js.arcgis.com/calcite-components/1.0.0-beta.97/calcite.esm.js" type="module"></script>
+    <link rel="stylesheet" href="https://js.arcgis.com/calcite-components/1.0.0-beta.97/calcite.css" />
     
     <!--link rel="stylesheet" href="https://js.arcgis.com/4.22/@arcgis/core/assets/esri/themes/light/main.css" /-->
-    <link rel="stylesheet" href="https://js.arcgis.com/4.22/@arcgis/core/assets/esri/themes/dark/main.css" />
+    <link rel="stylesheet" href="https://js.arcgis.com/4.25/@arcgis/core/assets/esri/themes/dark/main.css" />
   
     <link rel="stylesheet" href="./css/main.css" />
   </head>
@@ -60,6 +60,7 @@
 
           <!-- Custom panels -->
           <calcite-panel heading="Funksjoner" data-panel-id="functions">
+            <calcite-progress id="function-progress" type="indeterminate"></calcite-progress>
             <calcite-pick-list id="function-list">
               <calcite-pick-list-item label="Fjellskygge" description="Fremhever landskapets topografi" value="0" selected>
                   <calcite-action slot="actions-end" icon="function"></calcite-action>

@@ -1,4 +1,4 @@
-import RasterFunction from 'https://js.arcgis.com/4.22/@arcgis/core/layers/support/RasterFunction.js'
+import RasterFunction from 'https://js.arcgis.com/4.25/@arcgis/core/layers/support/RasterFunction.js'
 
 export default class RasterFunctionTemplates {
   constructor(rasterLayer){
@@ -50,5 +50,7 @@ export default class RasterFunctionTemplates {
     
     if (functionIndex >= this.templates.length) return
     this.rasterLayer.renderingRule = this.templates[functionIndex]
+    let progressBar = document.getElementById('function-progress')
+    progressBar.style.display = ''
   }
 }
